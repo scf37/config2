@@ -20,6 +20,7 @@ script:
   - git config --local user.email "scf370@gmail.com"
   - git config --local user.name "Travis"
   - sbt ++$TRAVIS_SCALA_VERSION coverage test
+  - mkdir -p ~/.bintray/
   - cat .secret-enc/.credentials | openssl aes-256-cbc -a -d -k "$PASSWORD" > ~/.bintray/.credentials
   - sbt dist
   - eval "$(ssh-agent -s)" #start the ssh agent
