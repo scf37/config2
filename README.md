@@ -1,6 +1,6 @@
 # config2
 ![Build status](https://travis-ci.org/scf37/config2.svg?branch=master)
-[![Coverage Status](https://coveralls.io/repos/github/scf37/config2/badge.svg?branch=master)](https://coveralls.io/github/scf37/config2?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/scf37/config2/badge.svg?branch=master&42)](https://coveralls.io/github/scf37/config2?branch=master)
 
 Config2 library
 
