@@ -54,6 +54,12 @@ trait Config {
    * @file relative file name
    */
   def properties(file: String): Option[Map[String, String]]
+
+  /**
+    * Return combined properties, provided by this config
+    * @return combined map of all loaded properties
+    */
+  def properties(): Map[String, String]
   
   /**
    * Read text file with specified encoding. Merge is not supported, so file with most precedence wins.

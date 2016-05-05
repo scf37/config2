@@ -99,7 +99,7 @@ private[config2] class ConfigImpl(
       case _ => false
     }
 
-    if (!result.isDefined) {
+    if (result.isEmpty) {
       logger.info(s"Unable to locate '$file'!")
     }
     result
@@ -153,6 +153,20 @@ private[config2] class ConfigImpl(
       logger.info(s"Unable to locate '$file'!")
       None
     }
+  }
+
+  override def properties(): Map[String, String] = {
+    var result = Map.empty[String, String]
+
+    sources.reverse.foreach {
+      case ConfigSource(_, Some(props)) =>
+        result ++= props
+      case _ =>
+
+    }
+
+    result
+
   }
 
 }
