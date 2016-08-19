@@ -19,8 +19,9 @@ lazy val config2 = (project in file("."))
     publish := {},
     releaseTagComment := s"[ci skip]Releasing ${(version in ThisBuild).value}",
     releaseCommitMessage := s"[ci skip]Setting version to ${(version in ThisBuild).value}",
+    resourceGenerators in Compile <+= buildProperties,
 
     bintrayOmitLicense := true,
 
     bintrayVcsUrl := Some("git@github.com:scf37/config2.git")
-).settings(Dist.settings)
+)

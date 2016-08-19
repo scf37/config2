@@ -16,5 +16,3 @@ done
 
 echo "How to decrypt:"
 echo "cat FILENAME | openssl aes-256-cbc -a -d -k  \"$1\""
-
-#openssl aes-256-cbc -a -k  "fuck"
