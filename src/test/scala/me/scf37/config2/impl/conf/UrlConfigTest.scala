@@ -5,17 +5,16 @@ import java.nio.file.Paths
 import me.scf37.config2.impl.ConfigLogger
 import me.scf37.config2.impl.UrlReader
 import org.expecty.Expecty
-import org.scalamock.scalatest.MockFactory
 import org.scalatest.FunSuite
 
 import scala.io.Source
 
 
-class UrlConfigTest extends FunSuite with MockFactory {
+class UrlConfigTest extends FunSuite  {
   val test = new Expecty()
 
   test("read classpath resource - from root") {
-    val conf = new UrlReader("classpath:", stub[ConfigLogger])
+    val conf = new UrlReader("classpath:", ConfigLoggerStub)
     
     test {
       conf.readProperties("test/a/1.properties").isDefined
@@ -25,7 +24,7 @@ class UrlConfigTest extends FunSuite with MockFactory {
   }
   
   test("read classpath resource - from root2") {
-    val conf = new UrlReader("classpath:/", stub[ConfigLogger])
+    val conf = new UrlReader("classpath:/", ConfigLoggerStub)
     
     test {
       conf.readProperties("test/a/1.properties").isDefined
@@ -35,7 +34,7 @@ class UrlConfigTest extends FunSuite with MockFactory {
   }
   
   test("read classpath resource - from folder") {
-    val conf = new UrlReader("classpath:test", stub[ConfigLogger])
+    val conf = new UrlReader("classpath:test", ConfigLoggerStub)
     
     test {
       conf.readProperties("a/1.properties").isDefined
@@ -45,7 +44,7 @@ class UrlConfigTest extends FunSuite with MockFactory {
   }
   
   test("read classpath resource - from folder2") {
-    val conf = new UrlReader("classpath:test/", stub[ConfigLogger])
+    val conf = new UrlReader("classpath:test/", ConfigLoggerStub)
     
     test {
       conf.readProperties("a/1.properties").isDefined
@@ -55,7 +54,7 @@ class UrlConfigTest extends FunSuite with MockFactory {
   }
   
   test("read classpath resource - from folder3") {
-    val conf = new UrlReader("classpath:/test/", stub[ConfigLogger])
+    val conf = new UrlReader("classpath:/test/", ConfigLoggerStub)
     
     test {
       conf.readProperties("a/1.properties").isDefined
@@ -64,7 +63,7 @@ class UrlConfigTest extends FunSuite with MockFactory {
   }
   
   test("read classpath resource - from folder4") {
-    val conf = new UrlReader("classpath:/test/a", stub[ConfigLogger])
+    val conf = new UrlReader("classpath:/test/a", ConfigLoggerStub)
     
     test {
       conf.readProperties("1.properties").isDefined
@@ -73,7 +72,7 @@ class UrlConfigTest extends FunSuite with MockFactory {
   }
   
   test("Reading of existing classpath resource returns expected body") {
-    val conf = new UrlReader("classpath:/test/a", stub[ConfigLogger])
+    val conf = new UrlReader("classpath:/test/a", ConfigLoggerStub)
     
     test {
       conf.readProperties("1.properties").get == Map("key1" -> "value1")
@@ -83,7 +82,7 @@ class UrlConfigTest extends FunSuite with MockFactory {
   }
   
   test("Reading of non-existing classpath resource returns None") {
-    val conf = new UrlReader("classpath:/test/a", stub[ConfigLogger])
+    val conf = new UrlReader("classpath:/test/a", ConfigLoggerStub)
     
     test {
       conf.readProperties("x1.properties") == None
@@ -93,7 +92,7 @@ class UrlConfigTest extends FunSuite with MockFactory {
   }
   
   test("read file resource - absolute path") {
-    val conf = new UrlReader(Paths.get("src/test/resources").toAbsolutePath().toString, stub[ConfigLogger])
+    val conf = new UrlReader(Paths.get("src/test/resources").toAbsolutePath().toString, ConfigLoggerStub)
     
     test {
       conf.readProperties("test/a/1.properties").isDefined
@@ -103,7 +102,7 @@ class UrlConfigTest extends FunSuite with MockFactory {
   }
   
   test("read file resource - absolute path2") {
-    val conf = new UrlReader(Paths.get("src/test/resources").toAbsolutePath().toString + "/", stub[ConfigLogger])
+    val conf = new UrlReader(Paths.get("src/test/resources").toAbsolutePath().toString + "/", ConfigLoggerStub)
     
     test {
       conf.readProperties("test/a/1.properties").isDefined
@@ -113,7 +112,7 @@ class UrlConfigTest extends FunSuite with MockFactory {
   }
   
   test("read file resource - relative path") {
-    val conf = new UrlReader(Paths.get("src/test/resources").toString, stub[ConfigLogger])
+    val conf = new UrlReader(Paths.get("src/test/resources").toString, ConfigLoggerStub)
     
     test {
       conf.readProperties("test/a/1.properties").isDefined
@@ -123,7 +122,7 @@ class UrlConfigTest extends FunSuite with MockFactory {
   }
   
   test("Reading of existing file resource returns expected body") {
-    val conf = new UrlReader(Paths.get("src/test/resources/test/a").toString, stub[ConfigLogger])
+    val conf = new UrlReader(Paths.get("src/test/resources/test/a").toString, ConfigLoggerStub)
     
     test {
       conf.readProperties("1.properties").get == Map("key1" -> "value1")
@@ -133,7 +132,7 @@ class UrlConfigTest extends FunSuite with MockFactory {
   }
   
   test("Reading of non-existing file resource returns None") {
-    val conf = new UrlReader(Paths.get("src/test/resources/test/a").toString, stub[ConfigLogger])
+    val conf = new UrlReader(Paths.get("src/test/resources/test/a").toString, ConfigLoggerStub)
     
     test {
       conf.readProperties("x1.properties") == None
@@ -143,7 +142,7 @@ class UrlConfigTest extends FunSuite with MockFactory {
   }
   
   test("read file resource - relative path with explicit file: prefix") {
-    val conf = new UrlReader("file:" + Paths.get("src/test/resources/test/a").toString, stub[ConfigLogger])
+    val conf = new UrlReader("file:" + Paths.get("src/test/resources/test/a").toString, ConfigLoggerStub)
     
     test {
       conf.readProperties("1.properties").get == Map("key1" -> "value1")
@@ -153,7 +152,7 @@ class UrlConfigTest extends FunSuite with MockFactory {
   }
   
   test("read resource - unknown protocol should throw exception") {
-    val conf = new UrlReader("xxx:" + Paths.get("src/test/resources/test/a").toString, stub[ConfigLogger])
+    val conf = new UrlReader("xxx:" + Paths.get("src/test/resources/test/a").toString, ConfigLoggerStub)
     
     intercept[Exception] {
       conf.readProperties("1.properties")
@@ -167,6 +166,9 @@ class UrlConfigTest extends FunSuite with MockFactory {
       conf.readFile("1.properties")
     }
   }
+}
 
-  
+private object ConfigLoggerStub extends ConfigLogger {
+  override def info(msg: String): Unit = {}
+  override def debug(msg: String): Unit = {}
 }

@@ -8,7 +8,7 @@ Usage:
 
 ```
 resolvers += "Scf37" at "https://dl.bintray.com/scf37/maven/"
-libraryDependencies += "me.scf37.config2" %% "config2" % "1.0.1"
+libraryDependencies += "me.scf37.config2" %% "config2" % "1.0.4"
 ```
 
 Example:
